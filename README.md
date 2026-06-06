@@ -2,7 +2,7 @@
 
 # 📋 FloatTodo
 
-**轻量级桌面悬浮便签 · Lightweight Floating Todo for Windows**
+**轻量级桌面悬浮便签 · Lightweight Floating Todo for Windows & Linux**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Built with Tauri](https://img.shields.io/badge/Built%20with-Tauri%202-blue?logo=tauri)](https://tauri.app)
@@ -34,12 +34,26 @@
 
 前往 [Releases](../../releases) 页面下载最新版：
 
+**Windows**
+
 | 文件 | 说明 |
 |------|------|
 | `FloatTodo_x.x.x_x64-setup.exe` | 推荐，NSIS 安装包 |
 | `FloatTodo_x.x.x_x64_en-US.msi` | MSI 安装包 |
 
-下载后双击安装，启动后图标出现在系统托盘。
+**Linux**
+
+| 文件 | 说明 |
+|------|------|
+| `float-todo_x.x.x_amd64.AppImage` | 推荐，免安装直接运行 |
+| `float-todo_x.x.x_amd64.deb` | Debian / Ubuntu |
+
+> **Linux 中文字体**：若中文显示为方块，请安装：
+> ```bash
+> sudo apt install fonts-noto-cjk
+> ```
+
+下载后双击安装（Windows）或赋予执行权限运行（Linux AppImage），启动后图标出现在系统托盘。
 
 ## ⌨️ 快捷键
 

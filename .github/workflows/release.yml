@@ -7,9 +7,19 @@ on:
 
 jobs:
   release:
-    runs-on: windows-latest
     permissions:
       contents: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: windows-latest
+            args: ''
+          - platform: ubuntu-22.04
+            args: ''
+
+    runs-on: ${{ matrix.platform }}
 
     steps:
       - uses: actions/checkout@v4
@@ -21,6 +31,16 @@ jobs:
 
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Linux dependencies
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libayatana-appindicator3-dev \
+            librsvg2-dev \
+            patchelf
 
       - name: Install frontend deps
         run: npm install
@@ -35,15 +55,26 @@ jobs:
           releaseBody: |
             ## 下载
 
-            点击下方 `FloatTodo_x.x.x_x64-setup.exe` 安装，或下载 `.msi` 版本。
+            ### Windows
+            | 文件 | 说明 |
+            |------|------|
+            | `FloatTodo_x.x.x_x64-setup.exe` | 推荐，NSIS 安装包 |
+            | `FloatTodo_x.x.x_x64_en-US.msi` | MSI 安装包 |
 
-            **首次安装请使用安装包（.exe 或 .msi），安装后双击桌面图标即可启动。**
+            ### Linux
+            | 文件 | 说明 |
+            |------|------|
+            | `float-todo_x.x.x_amd64.AppImage` | 推荐，免安装直接运行 |
+            | `float-todo_x.x.x_amd64.deb` | Debian / Ubuntu |
+
+            > Linux 用户若中文显示为方块，请安装中文字体：
+            > `sudo apt install fonts-noto-cjk`
 
             ## 快捷键
-
             | 快捷键 | 功能 |
             |--------|------|
             | `Ctrl+Alt+T` | 显示 / 隐藏主窗口 |
 
           releaseDraft: false
           prerelease: false
+          args: ${{ matrix.args }}
